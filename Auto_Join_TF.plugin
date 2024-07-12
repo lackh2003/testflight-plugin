@@ -1,0 +1,19 @@
+[General]
+name = Auto Join TestFlight
+desc = Automatically join TestFlight using session information.
+author = YourName
+homepage = https://yourhomepage.com
+icon = https://path_to_your_icon/icon.png
+#input = APP_ID
+date = 2024-03-07 22:10:30
+
+[Rule]
+DOMAIN, testflight.apple.com, PROXY
+
+[Script]
+http-request ^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path=https://your_script_host_url/auto_join_tf.js, tag=Store Session Info
+http-request ^https:\/\/testflight\.apple\.com\/join\/.* script-path=https://your_script_host_url/auto_join_tf.js, tag=Add TestFlight ID
+cron "0 * * * *" script-path=https://your_script_host_url/auto_join_tf.js, tag=Auto Join TestFlight
+
+[Mitm]
+hostname = testflight.apple.com
